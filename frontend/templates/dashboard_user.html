@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Pothole</title>
+  <link rel="stylesheet" href="/static/css/style5.css">
+  <script>
+    async function detectPothole(event) {
+      event.preventDefault();
+
+      const form = document.getElementById("potholeForm");
+      const formData = new FormData(form);
+
+      // Show loading indicator
+      document.getElementById("detection-status").textContent = "Detecting pothole...";
+      document.getElementById("detection-status").style.display = "block";
+
+      try {
+        const response = await fetch("/detect", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (data.output_image_url) {
+          const resultImg = document.getElementById("result-image");
+          resultImg.src = data.output_image_url;
+          resultImg.style.display = "block";
+          document.getElementById("result-container").style.display = "block";
+
+          // Save path to hidden field
+          document.getElementById("result-path").value = data.output_image_url;
+          
+          // Update detection status
+          document.getElementById("detection-status").textContent = "Detection complete! You can now submit your complaint.";
+          document.getElementById("detection-status").className = "detection-success";
+        } else {
+          document.getElementById("detection-status").textContent = "Detection failed. Please try again.";
+          document.getElementById("detection-status").className = "detection-error";
+        }
+      } catch (error) {
+        document.getElementById("detection-status").textContent = "An error occurred. Please try again.";
+        document.getElementById("detection-status").className = "detection-error";
+      }
+    }
+
+    function useCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            document.getElementById("latitude").value = position.coords.latitude;
+            document.getElementById("longitude").value = position.coords.longitude;
+            document.getElementById("location").value = "Fetched from current location";
+            
+            // Show success message
+            const locationStatus = document.getElementById("location-status");
+            locationStatus.textContent = "Current location successfully captured!";
+            locationStatus.style.display = "block";
+            locationStatus.className = "location-success";
+          },
+          (error) => {
+            const locationStatus = document.getElementById("location-status");
+            locationStatus.textContent = "Failed to get your location: " + error.message;
+            locationStatus.style.display = "block";
+            locationStatus.className = "location-error";
+          }
+        );
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+   <!---- <div class="logo-container">
+      <img src="/static/images/pothole-icon.png" alt="Pothole Icon" class="logo-icon">
+      <div class="logo-text">Pothole Detection System</div>
+    </div>-->
+
+  
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 20.9C13.4714 20.9 14.9 20.5 16.1213 19.7165C17.3427 18.9331 18.3072 17.7997 18.9021 16.4498C19.497 15.0999 19.6963 13.5951 19.4747 12.1343C19.2531 10.6735 18.6203 9.3158 17.6569 8.2437C16.6934 7.1716 15.4454 6.42311 14.0627 6.09066C12.68 5.7582 11.2307 5.86371 9.91209 6.39442C8.59352 6.92513 7.46849 7.85562 6.69071 9.05986C5.91293 10.2641 5.51604 11.6854 5.55 13.13C5.55 17.35 9.25 20.45 11.45 20.85C11.6301 20.8833 11.815 20.9 12 20.9Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="white"/>
+        </svg>
+        <span>Pothole Detection System</span>
+    </div>
+    
+
+    <div class="nav-links">
+      <a href="/dashboard/user">Home</a>
+      <a href="/dashboard/user/complaints/existing">Check Status</a>
+      <a href="/">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Tab Navigation -->
+  <div class="tab-container">
+    <a href="/dashboard/user" class="tab-button active">Report Complaint</a>
+    <a href="/dashboard/user/complaints/existing" class="tab-button">Existing Complaints</a>
+    <a href="/dashboard/user/complaints/fixed" class="tab-button">Fixed Complaints</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <div class="form-container">
+      <h1>Report a Pothole</h1>
+      <p class="subtitle">Submit details about a pothole you've found. Your report will help improve road safety.</p>
+
+      <form id="potholeForm" method="POST" action="/submit" enctype="multipart/form-data">
+        <!-- Upload Image Section -->
+        <div class="form-section">
+          <h2>Upload Pothole Image</h2>
+          <div class="upload-box">
+            <label for="image-upload" class="upload-content">
+              <img src="/static/images/camera-icon.png" alt="Camera" class="camera-icon">
+              <span>Upload or Take Photo</span>
+              <input type="file" id="image-upload" name="image" accept="image/*" required style="display: none;">
+            </label>
+          </div>
+          <div id="upload-preview" class="preview-container" style="display: none;">
+            <img id="image-preview" src="" alt="Preview">
+            <button type="button" class="remove-preview">Remove</button>
+          </div>
+        </div>
+
+        <!-- Description Section -->
+        <div class="form-section">
+          <h2>Description</h2>
+          <textarea 
+            name="description"
+            placeholder="Describe the pothole and any additional details"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+
+        <!-- Location Section -->
+        <div class="form-section">
+          <h2>Location</h2>
+          <div class="location-input-container">
+            <input 
+              type="text" 
+              id="location"
+              name="location"
+              placeholder="Enter the location of the pothole"
+              class="location-input"
+              required
+            >
+            <button type="button" class="location-button" onclick="useCurrentLocation()">Use current location</button>
+            <div id="location-status" style="display: none;"></div>
+
+            <button type="button" class="location-button" onclick="findCoordinates()">Find Latitude and Longitude</button>
+
+            
+            <div class="coordinates-container">
+              <div class="coordinate-input">
+                <label for="latitude">Latitude:</label>
+                <input type="text" id="latitude" name="latitude" required>
+              </div>
+              <div class="coordinate-input">
+                <label for="longitude">Longitude:</label>
+                <input type="text" id="longitude" name="longitude" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden input to store processed image path -->
+        <input type="hidden" name="result_image_path" id="result-path">
+
+        <!-- Pothole Detection Section -->
+        <div class="form-section">
+          <h2>Pothole Detection</h2>
+          <div class="detection-info">
+            <div class="info-icon">!</div>
+            <p>Click the Detect Pothole button to automatically detect potholes and assess severity</p>
+          </div>
+          <div id="detection-status" style="display: none;"></div>
+        </div>
+
+        <!-- Result Container -->
+        <div id="result-container" class="form-section" style="display: none;">
+          <h2>Detection Result</h2>
+          <div class="result-image-container">
+            <img id="result-image" src="" alt="Detection Result">
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons-container">
+          <button type="button" class="detect-button" onclick="detectPothole(event)">Detect Pothole</button>
+          <button type="submit" class="submit-button">Submit Complaint</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Preview uploaded image
+    document.getElementById('image-upload').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('image-preview').src = e.target.result;
+          document.getElementById('upload-preview').style.display = 'flex';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Remove preview
+    document.querySelector('.remove-preview').addEventListener('click', function() {
+      document.getElementById('image-upload').value = '';
+      document.getElementById('upload-preview').style.display = 'none';
+    });
+  </script>
+  <script>
+    async function findCoordinates() {
+      const locationInput = document.getElementById('location').value.trim();
+      const latitudeInput = document.getElementById('latitude');
+      const longitudeInput = document.getElementById('longitude');
+      const locationStatus = document.getElementById('location-status');
+  
+      if (!locationInput) {
+        locationStatus.textContent = "Please enter a location to find coordinates.";
+        locationStatus.style.display = "block";
+        locationStatus.className = "location-error";
+        return;
+      }
+  
+      try {
+        const apiKey = 'AIzaSyC7siNY75HjFx4O4BPev1zSRTg-0ZvG-zo'; // ⚡ Replace with your real Google Maps API Key
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(locationInput)}&key=${apiKey}`);
+        const data = await response.json();
+  
+        if (data.status === "OK") {
+          const result = data.results[0];
+          latitudeInput.value = result.geometry.location.lat;
+          longitudeInput.value = result.geometry.location.lng;
+  
+          locationStatus.textContent = "Coordinates successfully found!";
+          locationStatus.style.display = "block";
+          locationStatus.className = "location-success";
+        } else {
+          locationStatus.textContent = "Unable to find coordinates for the entered location.";
+          locationStatus.style.display = "block";
+          locationStatus.className = "location-error";
+        }
+      } catch (error) {
+        console.error('Error fetching coordinates:', error);
+        locationStatus.textContent = "An error occurred while finding coordinates.";
+        locationStatus.style.display = "block";
+        locationStatus.className = "location-error";
+      }
+    }
+  </script>
+  
+</body>
+</html>

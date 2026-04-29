@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Login</title>
+  <link rel="stylesheet" href="/static/css/style3.css">
+</head>
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="corner-decoration top-left"></div>
+  <div class="corner-decoration top-right"></div>
+  
+  <div class="login-container">
+    <div class="login-box">
+      <div class="avatar-container">
+        <div class="avatar user-avatar"></div>  
+      </div>
+      <h2>USER LOGIN</h2>
+      <p class="subtitle">Enter your credentials to continue</p>
+      
+      <form method="POST" action="/login/user">
+        <div class="input-group">
+          <input type="email" name="email" placeholder="Email" required>
+          <span class="input-icon email-icon">✉️</span>
+        </div>
+        <div class="input-group">
+          <input type="password" name="password" placeholder="Password" required>
+          <span class="input-icon password-icon">🔒</span>
+        </div>
+        <button type="submit" class="login-btn user-btn">LOGIN</button>
+        <p class="form-footer">If you're a new user, then <a href="/signup/user" class="signup-link">Sign up</a></p>
+      </form>
+    </div>
+  </div>
+  
+  <div class="city-skyline"></div>
+  <div class="road-container">
+    <div class="road">
+      <div class="lane-markings"></div>
+    </div>
+    <div class="cars">
+      <div class="car red-car" style="right: 0%"></div>
+      <div class="car blue-car" style="right: 25%"></div>
+      <div class="car yellow-car" style="right: 50%"></div>
+      <div class="car green-car" style="right: 75%"></div>
+    </div>
+  </div>
+
+  <script>
+    // Flash message fade out
+    setTimeout(() => {
+      document.querySelectorAll('.flash').forEach(el => {
+        el.style.transition = "opacity 0.5s ease";
+        el.style.opacity = "0";
+        setTimeout(() => el.remove(), 500);
+      });
+    }, 4000);
+    
+    // Animate lane markings
+    function animateLaneMarkings() {
+      const laneMarkings = document.querySelector('.lane-markings');
+      if (!laneMarkings) return;
+      
+      let position = 0;
+      
+      function animate() {
+        position -= 1;
+        if (position <= -40) position = 0;
+        laneMarkings.style.backgroundPosition = `${position}px 0`;
+        requestAnimationFrame(animate);
+      }
+      
+      animate();
+    }
+    
+    // Animate cars
+    function animateCars() {
+      const cars = document.querySelectorAll('.car');
+      
+      cars.forEach(car => {
+        // Determine direction based on initial position
+        let direction = car.style.left ? 'right' : 'left';
+        let position = parseInt(car.style[direction] || '0');
+        let speed = 0.1 + Math.random() * 0.2; // Random speed
+        
+        function animateCar() {
+          if (direction === 'left') {
+            position += speed;
+            car.style.left = `${position}%`;
+            if (position > 110) {
+              position = -10;
+            }
+          } else {
+            position += speed;
+            car.style.right = `${position}%`;
+            if (position > 110) {
+              position = -10;
+            }
+          }
+          requestAnimationFrame(animateCar);
+        }
+        
+        animateCar();
+      });
+    }
+    
+    // Initialize animations
+    document.addEventListener('DOMContentLoaded', function() {
+      animateLaneMarkings();
+      animateCars();
+    });
+  </script>
+</body>
+</html>

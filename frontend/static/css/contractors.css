@@ -1,0 +1,315 @@
+/* Additional styles for contractors page */
+
+/* Tab styles */
+.tabs {
+    display: flex;
+    margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #2a2a2a;
+    color: #b3b3b3;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-btn:hover {
+    background-color: #333;
+    color: #ffffff;
+}
+
+.tab-btn.active {
+    color: #0d6efd;
+    border-bottom: 2px solid #0d6efd;
+    background-color: #333;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Rating styles */
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.star {
+    color: #767676;
+    font-size: 1.1rem;
+}
+
+.star.filled {
+    color: #ffc107;
+}
+
+.rating-value {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    color: #b3b3b3;
+}
+
+.rating.large .star {
+    font-size: 1.5rem;
+}
+
+.rating.large .rating-value {
+    font-size: 1.1rem;
+}
+
+/* Button styles */
+.btn-approve {
+    background-color: #198754;
+    color: white;
+}
+
+.btn-approve:hover {
+    background-color: #157347;
+}
+
+.btn-reject {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-reject:hover {
+    background-color: #bb2d3b;
+}
+
+.btn-rate {
+    background-color: #6c757d;
+    color: white;
+    margin-left: 1rem;
+}
+
+.btn-rate:hover {
+    background-color: #5c636a;
+}
+
+/* Profile modal styles */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #444;
+}
+
+.profile-info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-info p {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+}
+
+.profile-rating {
+    display: flex;
+    align-items: center;
+}
+
+.profile-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.detail-group {
+    background-color: #2a2a2a;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.detail-group h4 {
+    margin-bottom: 1rem;
+    color: #b3b3b3;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 0.75rem;
+}
+
+.detail-label {
+    font-weight: 500;
+    min-width: 140px;
+    color: #a0a0a0;
+}
+
+.recent-jobs {
+    margin-top: 1.5rem;
+}
+
+.recent-jobs h4 {
+    margin-bottom: 1rem;
+    color: #b3b3b3;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.mini-table th {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    background-color: #2a2a2a;
+    color: #b3b3b3;
+    font-weight: 600;
+}
+
+.mini-table td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #444;
+}
+
+/* Rating form styles */
+.rating-form {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #444;
+}
+
+.rating-input {
+    margin-bottom: 1.5rem;
+}
+
+.interactive-stars {
+    display: flex;
+    align-items: center;
+}
+
+.star-input {
+    color: #767676;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.star-input:hover,
+.star-input.active {
+    color: #ffc107;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #e0e0e0;
+    resize: vertical;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #0d6efd;
+}
+
+.rating-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-submit {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: #0b5ed7;
+}
+
+/* Application details specific styles */
+.application-date {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+}
+
+.document-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.document-link {
+    color: #0d6efd;
+    text-decoration: none;
+    padding: 0.5rem;
+    background-color: rgba(13, 110, 253, 0.1);
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.document-link:hover {
+    background-color: rgba(13, 110, 253, 0.2);
+}
+
+.application-note {
+    background-color: #2a2a2a;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-top: 1.5rem;
+}
+
+.application-note h4 {
+    margin-bottom: 1rem;
+    color: #b3b3b3;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.note-content {
+    color: #b3b3b3;
+    line-height: 1.6;
+}
+
+.contractors-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .contractors-table th,
+  .contractors-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+  }
+  
+  .contractors-table th {
+    background-color: #2a2a2a;
+    font-weight: bold;
+  }
+  
+  .contractors-table .actions {
+    text-align: center;
+  }
+  
+  .contractors-table .btn-view {
+    padding: 6px 12px;
+    background-color: #0a74da;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  

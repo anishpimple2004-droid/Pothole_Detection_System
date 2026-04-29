@@ -1,0 +1,253 @@
+/* static/css/style.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background-color: #f8f9fa;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #1e293b;
+    color: white;
+  }
+  
+  .nav-logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .nav-links a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Dashboard Container */
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #333;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+  
+  /* Dashboard Actions */
+  .dashboard-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .action-button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.8rem 1rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    font-weight: 500;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+  }
+  
+  .action-button:hover {
+    background-color: #2563eb;
+  }
+  
+  /* Toast Notifications */
+  #toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
+  .toast {
+    padding: 12px 20px;
+    color: white;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .success {
+    background-color: #4CAF50;
+  }
+  
+  .error {
+    background-color: #f44336;
+  }
+  
+  .warning {
+    background-color: #ff9800;
+  }
+  
+  .info {
+    background-color: #2196F3;
+  }
+  
+  /* Form Styles */
+  .form-subtitle {
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .upload-area {
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+  
+  .location-coords {
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+  }
+  
+  .location-coords:last-child {
+    margin-right: 0;
+  }
+  
+  .location-btn {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  
+  .location-btn:hover {
+    background-color: #16a34a;
+  }
+  
+  .location-btn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+  }
+  
+  .warning-text {
+    display: flex;
+    align-items: center;
+    color: #b45309;
+    background-color: #fef3c7;
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .warning-icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
+  
+  .detect-btn, .submit-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+  
+  .detect-btn {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  .detect-btn:hover {
+    background-color: #2563eb;
+  }
+  
+  .submit-btn {
+    background-color: #22c55e;
+    color: white;
+  }
+  
+  .submit-btn:hover {
+    background-color: #16a34a;
+  }
+  
+  .result-container {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .result-container h3 {
+    margin-bottom: 10px;
+  }
+  
+  /* Complaint Card Styles */
+  .complaint-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  
+  .complaint-card p {
+    margin-bottom: 0.75rem;
+  }
+  
+  .complaint-card img {
+    max-width: 100%;
+    border-radius: 4px;
+    margin-top: 1rem;
+  }

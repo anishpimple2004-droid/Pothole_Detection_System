@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaint Submitted - Pothole Detection System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style9.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</head>
+<body>
+  <header>
+    <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="/static/images/pothole-icon.png" alt="Pothole Icon" class="logo-icon">
+      <div class="logo-text">Pothole Detection System</div>
+    </div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/about">About Us</a>
+      <a href="/dashboard/user/complaints/existing">Check Status</a>
+      <a href="/login/user">Logout</a>
+    </div>
+  </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="card success-card">
+        <div class="card-header">
+          <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h2>Complaint Submitted Successfully!</h2>
+        </div>
+        
+        <div class="card-body">
+          <div class="reference-section">
+            <p>Your reference ID is:</p>
+            <div class="reference-id">{{ complaint_id }}</div>
+            <p class="reference-note">Please save this ID for future reference</p>
+          </div>
+
+          <div class="detection-section">
+            <h3>Detection Results</h3>
+            <div class="detection-image">
+              <img src="{{ result_path }}" alt="Detected pothole">
+            </div>
+            <div class="detection-info">
+              <div class="severity-indicator">
+                <span class="severity-label">Severity:</span>
+                <div class="severity-bar">
+                  <div class="severity-fill {{ severity }}"></div>
+                </div>
+                <span class="severity-value">{{ severity|capitalize }}</span>
+              </div>
+              <p class="detection-note">Our AI has analyzed your image and detected a pothole with the severity shown above.</p>
+            </div>
+          </div>
+
+          <div class="next-steps">
+            <h3>Next Steps</h3>
+            <p>Your complaint has been registered in our system. Our maintenance team will assess the issue based on severity and location.</p>
+            <p>You can check the status of your complaint using your reference ID.</p>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <a href="/dashboard/user" class="btn btn-outline"><i class="fas fa-arrow-left"></i> New Report</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Pothole Detection System - Improving road safety through technology</p>
+  </footer>
+
+  <script src="complaint_s.js"></script>
+</body>
+</html>

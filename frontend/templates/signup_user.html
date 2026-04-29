@@ -1,0 +1,91 @@
+<!-- signup_user.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Signup</title>
+  <link rel="stylesheet" href="/static/css/style4.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+  <!-- Corner decorations -->
+  <div class="corner-decoration top-left"></div>
+  <div class="corner-decoration top-right"></div>
+
+  <!-- FLASH MESSAGE BLOCK -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="login-container">
+    <div class="login-box">
+      <div class="avatar-container">
+        <div class="avatar user-avatar"></div>
+      </div>
+      <h2>USER SIGNUP</h2>
+      <p class="subtitle">Create your user account</p>
+      
+      <form method="POST" action="/signup/user">
+        <div class="input-group">
+          <input type="text" name="name" placeholder="Full Name" required />
+          <span class="input-icon"><i class="fas fa-user"></i></span>
+        </div>
+        
+        <div class="input-group">
+          <input type="email" name="email" placeholder="Email" required />
+          <span class="input-icon"><i class="fas fa-envelope"></i></span>
+        </div>
+        
+        <div class="input-group">
+          <input type="text" name="phone" placeholder="Phone Number" required />
+          <span class="input-icon"><i class="fas fa-phone"></i></span>
+        </div>
+        
+        <div class="input-group">
+          <input type="password" name="password" placeholder="Password" required />
+          <span class="input-icon"><i class="fas fa-lock"></i></span>
+        </div>
+        
+        <div class="input-group">
+          <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+          <span class="input-icon"><i class="fas fa-shield-alt"></i></span>
+        </div>
+        
+        <button type="submit" class="signup-btn">SIGN UP</button>
+        <p class="login-link">Already have an account? <a href="/login/user">Login</a></p>
+      </form>
+    </div>
+  </div>
+  
+  <!-- City skyline -->
+  <div class="city-skyline"></div>
+  
+  <!-- Road and cars -->
+  <div class="road-container">
+    <div class="road">
+      <div class="lane-markings"></div>
+      <div id="cars-container" class="cars"></div>
+    </div>
+  </div>
+  
+  <script src="/static/js/signup.js"></script>
+  <script>
+    // Auto-hide flash messages after 4 seconds
+    setTimeout(() => {
+      const flashMessages = document.querySelectorAll('.flash');
+      flashMessages.forEach(msg => {
+        msg.style.transition = "opacity 0.5s ease";
+        msg.style.opacity = "0";
+        setTimeout(() => msg.remove(), 500); // remove from DOM after fade
+      });
+    }, 4000); // 4 seconds
+  </script>
+</body>
+</html>

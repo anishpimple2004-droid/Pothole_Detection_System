@@ -1,0 +1,18 @@
+body {
+    font-family: sans-serif;
+    margin: 40px;
+  }
+  
+  input, textarea {
+    width: 300px;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  

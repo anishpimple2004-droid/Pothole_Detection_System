@@ -1,0 +1,70 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dll
+
+# ---- Virtual Environments ----
+venv/
+.venv/
+env/
+ENV/
+
+# ---- Packages / Build ----
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ---- Logs / Temp ----
+*.log
+*.tmp
+*.swp
+*.swo
+
+# ---- Environment files ----
+.env
+.env.*
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+
+# ---- Tests ----
+.pytest_cache/
+
+# ---- IDE / Editor ----
+.vscode/
+.idea/
+
+# ---- OS Specific ----
+.DS_Store
+Thumbs.db
+
+# ---- Large Data / Models ----
+*.pth
+*.onnx
+*.h5
+*.pkl
+*.joblib
+*.npy
+*.npz
+
+# ---- Media files ----
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.jpg
+*.jpeg
+*.png
+*.gif
+
+# ---- Archives ----
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+venv/

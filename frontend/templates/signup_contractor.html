@@ -1,0 +1,84 @@
+<!-- signup_contractor.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contractor Signup</title>
+  <link rel="stylesheet" href="/static/css/style7.css">
+</head>
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Corner decorations -->
+  <div class="corner-decoration top-left"></div>
+  <div class="corner-decoration top-right"></div>
+
+  <div class="login-container">
+    <div class="login-box contractor-signup">
+      <!-- Avatar container -->
+      <div class="avatar-container">
+        <div class="avatar contractor-avatar"></div>
+      </div>
+      
+      <h2>CONTRACTOR SIGNUP</h2>
+      <p class="subtitle">Create a new contractor account</p>
+      
+      <form method="POST" action="/signup/contractor" enctype="multipart/form-data">
+        <div class="input-group">
+          <input type="text" name="name" placeholder="Full Name" required/>
+        </div>
+        <div class="input-group">
+          <input type="email" name="email" placeholder="Email" required/>
+        </div>
+        <div class="input-group">
+          <input type="password" name="password" placeholder="Password" required/>
+        </div>
+        <div class="input-group">
+          <input type="password" name="confirm_password" placeholder="Confirm Password" required/>
+        </div>
+        <div class="input-group">
+          <input type="text" name="company" placeholder="Company Name" required/>
+        </div>
+        
+        <!-- File input -->
+        <div class="file-input-container">
+          <input type="file" id="gov-id" name="id_proof" accept="image/*,.pdf" style="display: none;" required/>
+          <button type="button" id="file-button" class="file-button">Upload ID Proof</button>
+          <span id="file-name" class="file-name">No file chosen</span>
+        </div>
+        
+        <button type="submit" class="contractor-btn">SIGNUP</button>
+        <p class="form-footer">Already have an account? <a href="/login/contractor">Login</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- City skyline and road -->
+  <div class="city-skyline"></div>
+  <div class="road-container">
+    <div class="road">
+      <div class="lane-markings"></div>
+      <div class="cars" id="cars-container"></div>
+    </div>
+  </div>
+
+  <script>
+    // Flash message timeout
+    setTimeout(() => {
+      document.querySelectorAll('.flash').forEach(el => {
+        el.style.transition = "opacity 0.5s ease";
+        el.style.opacity = "0";
+        setTimeout(() => el.remove(), 500);
+      });
+    }, 4000);
+  </script>
+  <script src="/static/js/signup.js"></script>
+</body>
+</html>ss

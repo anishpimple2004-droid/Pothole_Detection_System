@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pothole Detection System - Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+</head>
+<body class="admin-dashboard">
+  <header class="navbar">
+    <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 20.9C13.4714 20.9 14.9 20.5 16.1213 19.7165C17.3427 18.9331 18.3072 17.7997 18.9021 16.4498C19.497 15.0999 19.6963 13.5951 19.4747 12.1343C19.2531 10.6735 18.6203 9.3158 17.6569 8.2437C16.6934 7.1716 15.4454 6.42311 14.0627 6.09066C12.68 5.7582 11.2307 5.86371 9.91209 6.39442C8.59352 6.92513 7.46849 7.85562 6.69071 9.05986C5.91293 10.2641 5.51604 11.6854 5.55 13.13C5.55 17.35 9.25 20.45 11.45 20.85C11.6301 20.8833 11.815 20.9 12 20.9Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="white"/>
+        </svg>
+        <span>Pothole Detection System</span>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+            <!--<li><a href="{{ url_for('admin_complaints') }}">Complaints</a></li>-->
+            <li><a href="/dashboard/admin/contractors">Contractors</a></li>
+            <li><a href="/" id="logout-btn">Logout</a></li>
+            
+
+        </ul>
+    </nav>
+    <div class="user-info">
+        <span class="dollar-sign">$</span>
+    </div>
+</header>
+
+    <main class="container">
+        <div class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <p>Manage pothole complaints and contractor assignments</p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon warning">⚠️</div>
+                <div class="stat-content">
+                  <h2>{{ total_complaints }}</h2>
+                    <p>Total Complaints</p>
+                    <span class="stat-footer">All time</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon progress">🔄</div>
+                <div class="stat-content">
+                  <h2>{{ in_progress }}</h2>
+                    <p>In Progress</p>
+                    <span class="stat-footer">Active repairs</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon success">✓</div>
+                <div class="stat-content">
+                  <h2>{{ completed }}</h2>
+                    <p>Completed</p>
+                    <span class="stat-footer">Resolved issues</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="admin-map-section">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h2>All Complaints Map</h2>
+              <button id="refresh-map-btn" style="padding: 6px 12px; font-size: 14px; background-color: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Refresh Map
+              </button>
+            </div>
+        
+            <div id="google-map" style="width: 100%; height: 400px; border-radius: 10px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+        
+            <div class="map-subtext" style="margin-top: 10px; font-size: 14px; color: #555;">
+            Loading pothole locations...
+            </div>
+        </section>
+        
+
+        <div class="complaints-section">
+            <h2>Pothole Complaints</h2>
+            <p>View and manage all reported potholes</p>
+
+            <div class="table-container">
+                <table class="complaints-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Severity</th>
+                            <th>Status</th>
+                            <th>Assigned To</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for complaint in complaints %}
+                      <tr>
+                        <td>{{ complaint[0] }}</td>
+                        <td>{{ complaint[1] }}</td>
+                        <td>{{ complaint[2] }}</td>
+                        <td><span class="badge {{ complaint[3]|lower }}">{{ complaint[3] }}</span></td>
+                        <td><span class="status {{ complaint[4]|replace(' ', '-')|lower }}">{{ complaint[4] }}</span></td>
+                        <td>{{ complaint[5] if complaint[5] else "-" }}</td>
+                        <td class="actions">
+                          <a href="{{ url_for('admin_complaints') }}?complaint_id={{ complaint[0] }}" class="btn-view">View</a>
+                          {% if complaint[4] != "Completed" %}
+                            {% if complaint[5] %}
+                            <span class="status in-progress">In Progress</span>
+                            {% else %}
+                            <button class="btn-assign" data-complaint-id="{{ complaint[0] }}">Assign</button>
+                            {% endif %}
+                          {% endif %}
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>                    
+                </table>
+            </div>
+        </div>
+    </main>
+
+
+    
+  
+
+    <!-- Assign Contractor Modal -->
+    <div id="assignModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Assign Contractor</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Assign a contractor to fix this pothole and set a deadline.</p>
+                
+                <div class="form-group">
+                    <label for="contractorSelect">Select Contractor</label>
+                    <div class="select-wrapper">
+                        <select id="contractorSelect">
+                            <option value="" disabled selected>Select a contractor</option>
+                            {% for contractor in active_contractors %}
+                              <option value="{{ contractor[0] }}">{{ contractor[1] }}</option>
+                            {% endfor %}
+                          </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deadlineDate">Set Deadline</label>
+                    <input type="date" id="deadlineDate" placeholder="dd-mm-yyyy">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel">Cancel</button>
+                <button class="btn-assign-submit">Assign</button>
+            </div>
+        </div>
+    </div>
+    <!-- View Complaint Modal (keeping it for backward compatibility) -->
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>View Complaint Details</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="complaint-details">
+                    <div class="detail-row">
+                        <div class="detail-label">Complaint ID:</div>
+                        <div class="detail-value" id="view-complaint-id"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Date Reported:</div>
+                        <div class="detail-value" id="view-complaint-date"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Location:</div>
+                        <div class="detail-value" id="view-complaint-location"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Severity:</div>
+                        <div class="detail-value" id="view-complaint-severity"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Status:</div>
+                        <div class="detail-value" id="view-complaint-status"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Assigned To:</div>
+                        <div class="detail-value" id="view-complaint-assigned"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/google-maps-integration.js') }}"></script>
+</body>
+</html>

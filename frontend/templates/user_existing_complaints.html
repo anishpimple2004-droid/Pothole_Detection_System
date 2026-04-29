@@ -1,0 +1,423 @@
+<!-- templates/user_existing_complaints.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Existing Complaints</title>
+  <link rel="stylesheet" href="/static/css/style5.css" />
+  <style>
+   /* Card styles */
+   .complaints-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    
+    .complaint-card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: transform 0.2s;
+    }
+    
+    .complaint-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .complaint-card img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 15px;
+    }
+    
+    .complaint-card h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .complaint-location {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      color: #555;
+    }
+    
+    .complaint-location svg {
+      margin-right: 5px;
+      fill: #666;
+    }
+    
+    .complaint-description {
+      margin: 10px 0;
+      color: #333;
+    }
+    
+    .complaint-status {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      margin: 10px 0;
+      background-color: #f1f1ff;
+      color: #6366f1;
+    }
+    
+    .severity-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      background-color: #f59e0b;
+      color: white;
+      font-weight: 500;
+    }
+    
+    .view-details-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #f0f0f0;
+      color: #333;
+      font-weight: 500;
+      text-align: center;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      text-decoration: none;
+      margin-top: 15px;
+    }
+    
+    .view-details-btn:hover {
+      background-color: #e0e0e0;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    
+    .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: 50px auto;
+      padding: 0;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      animation: modalFadeIn 0.3s;
+    }
+    
+    @keyframes modalFadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    
+    .modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    @media (min-width: 768px) {
+      .modal-body {
+        flex-direction: row;
+      }
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #666;
+    }
+    
+    .modal-image-container {
+      flex: 1;
+    }
+    
+    .modal-image-container img {
+      width: 100%;
+      border-radius: 6px;
+    }
+    
+    .modal-details {
+      flex: 1;
+    }
+    
+    .modal-map {
+      margin-top: 20px;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 6px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #777;
+    }
+    
+    .complaint-info-item {
+      margin-bottom: 15px;
+    }
+    
+    .complaint-info-item .label {
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    
+    .complaint-info-item .value {
+      color: #333;
+    }
+    
+    .severity-indicator {
+      padding: 3px 10px;
+      border-radius: 12px;
+      background-color: #f59e0b;
+      color: white;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+    
+    .action-button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background-color: #4a7bff;
+      color: white;
+      font-weight: 500;
+      text-align: center;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 20px;
+    }
+    
+    .action-button:hover {
+      background-color: #3a6bef;
+    }
+    
+    .no-complaints {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .card-relative-container {
+      position: relative;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 20.9C13.4714 20.9 14.9 20.5 16.1213 19.7165C17.3427 18.9331 18.3072 17.7997 18.9021 16.4498C19.497 15.0999 19.6963 13.5951 19.4747 12.1343C19.2531 10.6735 18.6203 9.3158 17.6569 8.2437C16.6934 7.1716 15.4454 6.42311 14.0627 6.09066C12.68 5.7582 11.2307 5.86371 9.91209 6.39442C8.59352 6.92513 7.46849 7.85562 6.69071 9.05986C5.91293 10.2641 5.51604 11.6854 5.55 13.13C5.55 17.35 9.25 20.45 11.45 20.85C11.6301 20.8833 11.815 20.9 12 20.9Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="white"/>
+      </svg>
+      <span>Pothole Detection System</span>
+  </div>
+    <div class="nav-links">
+      <a href="/dashboard/user">Home</a>
+      <a href="/dashboard/user/complaints/existing">Check Status</a>
+      <a href="/">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Tab Navigation -->
+  <div class="tab-container">
+    <a href="/dashboard/user" class="tab-button">Report Complaint</a>
+    <a href="/dashboard/user/complaints/existing" class="tab-button active">Existing Complaints</a>
+    <a href="/dashboard/user/complaints/fixed" class="tab-button">Fixed Complaints</a>
+  </div>
+
+  <div class="dashboard-container">
+    <h1>Existing Complaints</h1>
+
+    {% if complaints %}
+      <div class="complaints-container">
+        {% for complaint in complaints %}
+          <div class="complaint-card card-relative-container">
+            <div class="severity-tag">{{ complaint.severity|default("medium") }}</div>
+            <img src="{{ complaint.image_url }}" alt="Pothole Image" />
+            <h3>Complaint {{ complaint.id }}</h3>
+            <div class="complaint-location">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="#555555"/>
+              </svg>
+              {{ complaint.location }}
+            </div>
+            <div class="complaint-description">{{ complaint.description }}</div>
+            <div class="complaint-status">{{ complaint.status }}</div>
+            <button class="view-details-btn" onclick="openModal('{{ complaint.id }}', '{{ complaint.description }}', '{{ complaint.location }}', '{{ complaint.image_url }}', '{{ complaint.status }}', '{{ complaint.severity|default("medium") }}', '{{ complaint.date_reported|default("2025-04-19") }}', '{{ complaint.reported_by|default("testuser@example.com") }}')">View Details</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="no-complaints">
+        <p>No existing complaints found.</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Modal -->
+  <div id="complaintModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Complaint Details</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-image-container">
+          <img id="modalImage" src="" alt="Pothole Image">
+          <div class="modal-map">
+            <div id="modal-map" style="width: 100%; height: 200px; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></div>
+          </div>
+        </div>
+        <div class="modal-details">
+          <h3>Complaint Information</h3>
+          <p>Details about the reported pothole</p>
+          
+          <div class="complaint-info-item">
+            <div class="label">Status:</div>
+            <div class="value" id="modalStatus"></div>
+          </div>
+          
+          <div class="complaint-info-item">
+            <div class="label">Date Reported:</div>
+            <div class="value" id="modalDate"></div>
+          </div>
+          
+          <div class="complaint-info-item">
+            <div class="label">Location:</div>
+            <div class="value" id="modalLocation"></div>
+          </div>
+          
+          <div class="complaint-info-item">
+            <div class="label">Severity:</div>
+            <div class="value">
+              <span class="severity-indicator" id="modalSeverity"></span>
+            </div>
+          </div>
+          
+          <div class="complaint-info-item">
+            <div class="label">Reported By:</div>
+            <div class="value" id="modalReportedBy"></div>
+          </div>
+          
+          <div class="complaint-info-item">
+            <div class="label">Description:</div>
+            <div class="value" id="modalDescription"></div>
+          </div>
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Remove the markAsFixed function and button assignment
+    function openModal(id, description, location, imageUrl, status, severity, dateReported, reportedBy) {
+  document.getElementById('modalTitle').textContent = "Complaint Details - " + id;
+  document.getElementById('modalDescription').textContent = description;
+  document.getElementById('modalLocation').textContent = location;
+  document.getElementById('modalImage').src = imageUrl;
+  document.getElementById('modalStatus').textContent = status;
+  document.getElementById('modalSeverity').textContent = severity;
+  document.getElementById('modalDate').textContent = dateReported;
+  document.getElementById('modalReportedBy').textContent = reportedBy;
+
+  document.getElementById('complaintModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+
+  // 🧠 NEW: Load Map dynamically for this complaint
+  fetch('/api/admin/map_data')
+    .then(response => response.json())
+    .then(complaints => {
+      const targetComplaint = complaints.find(c => c.id === id);
+
+      if (!targetComplaint || !targetComplaint.latitude || !targetComplaint.longitude) {
+        document.getElementById('modal-map').innerHTML = "<p style='text-align:center; padding:20px;'>Location data unavailable</p>";
+        return;
+      }
+
+      const mapCenter = {
+        lat: parseFloat(targetComplaint.latitude),
+        lng: parseFloat(targetComplaint.longitude)
+      };
+
+      const modalMap = new google.maps.Map(document.getElementById('modal-map'), {
+        center: mapCenter,
+        zoom: 16,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        fullscreenControl: false,
+        streetViewControl: false,
+        mapTypeControl: false
+      });
+
+      const modalMarker = new google.maps.Marker({
+        position: mapCenter,
+        map: modalMap,
+        title: `Complaint ${id.substring(0, 6)}`
+      });
+    })
+    .catch(error => {
+      console.error('Error loading map data for modal:', error);
+    });
+}
+
+
+
+    function closeModal() {
+      document.getElementById('complaintModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function markAsFixed(id) {
+      alert("Complaint " + id + " marked as fixed!");
+      closeModal();
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('complaintModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7siNY75HjFx4O4BPev1zSRTg-0ZvG-zo"></script>
+
+</body>
+</html>

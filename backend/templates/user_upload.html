@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pothole Reporter</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script>
+    async function detectPothole(event) {
+      event.preventDefault();
+
+      const form = document.getElementById("upload-form");
+      const formData = new FormData(form);
+
+      const response = await fetch("/detect", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.output_image_url) {
+        const resultImg = document.getElementById("result-image");
+        resultImg.src = data.output_image_url;
+        resultImg.style.display = "block";
+
+        // Save path to hidden field
+        document.getElementById("result-path").value = data.output_image_url;
+      } else {
+        alert("Detection failed. Please try again.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>Report a Pothole</h2>
+
+  <form id="upload-form" method="POST" action="/submit" enctype="multipart/form-data">
+    <label>Description:</label><br>
+    <textarea name="description" required></textarea><br>
+
+    <label>Location:</label><br>
+    <input type="text" name="location" required /><br>
+
+    <label>Latitude:</label>
+    <input type="text" name="latitude" required />
+
+    <label>Longitude:</label>
+    <input type="text" name="longitude" required /><br>
+
+    <label>Upload Image:</label>
+    <input type="file" name="image" accept="image/*" required /><br><br>
+
+    <!-- Hidden input to store processed image path -->
+    <input type="hidden" name="result_image_path" id="result-path" />
+
+    <!-- Two buttons: Detect first, then Submit -->
+    <button onclick="detectPothole(event)">Detect Pothole</button>
+    <button type="submit">Submit Complaint</button>
+  </form>
+
+  <!-- Container to show detected image -->
+  <div style="margin-top: 20px;">
+    <h3>Detection Result:</h3>
+    <img id="result-image" src="" width="500" style="display:none;" />
+  </div>
+</body>
+</html>

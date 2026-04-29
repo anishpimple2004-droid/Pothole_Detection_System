@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Fixed Complaints</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style10.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 20.9C13.4714 20.9 14.9 20.5 16.1213 19.7165C17.3427 18.9331 18.3072 17.7997 18.9021 16.4498C19.497 15.0999 19.6963 13.5951 19.4747 12.1343C19.2531 10.6735 18.6203 9.3158 17.6569 8.2437C16.6934 7.1716 15.4454 6.42311 14.0627 6.09066C12.68 5.7582 11.2307 5.86371 9.91209 6.39442C8.59352 6.92513 7.46849 7.85562 6.69071 9.05986C5.91293 10.2641 5.51604 11.6854 5.55 13.13C5.55 17.35 9.25 20.45 11.45 20.85C11.6301 20.8833 11.815 20.9 12 20.9Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="white"/>
+            </svg>
+            <span>Pothole Detection System</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/dashboard/admin">Dashboard</a></li>
+                <li><a href="/dashboard/admin/complaints">Manage Complaints</a></li>
+                <li class="active"><a href="/dashboard/admin/fixed-complaints">Fixed Complaints</a></li>
+                <li><a href="/dashboard/admin/contractors">Contractors</a></li>
+                <li><a href="/" id="logout-btn">Logout</a></li>
+            </ul>
+        </nav>
+        <div class="user-menu">
+            <span class="user-icon">$</span>
+        </div>
+    </header>
+
+    <main>
+        <section class="dashboard-header">
+            <h1>Fixed Complaints Dashboard</h1>
+            <p>View all pothole complaints that have been completed</p>
+        </section>
+
+        <section class="complaints-section">
+            
+            <div class="complaints-grid" id="complaints-grid">
+                <!-- Fixed complaints will load here dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Complaint Modal (reuse from original) -->
+    <div class="modal" id="complaint-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Complaint Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-grid">
+                    <div class="modal-col">
+                        <div class="complaint-image-large">
+                            <img id="modal-image" src="../static/images/placeholder.jpg" alt="Pothole Image">
+                        </div>
+                        <div class="modal-map-container" style="margin-top: 20px;">
+                           
+                            <div id="modal-map" style="width: 100%; height: 200px; border-radius: 8px; margin-top: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-col">
+                        <div class="complaint-details">
+                            <h3>Complaint Information</h3>
+                            <div id="modal-status" class="modal-status completed">Completed</div>
+
+                            <div class="detail-item">
+                                <span class="detail-label">Date Reported:</span>
+                                <span id="modal-date-reported">-</span>
+                            </div>
+
+                            <div class="detail-item">
+                                <span class="detail-label">Date Fixed:</span>
+                                <span id="modal-date-fixed">-</span>
+                            </div>
+
+                            <div class="detail-item">
+                                <span class="detail-label">Location:</span>
+                                <span id="modal-location">-</span>
+                            </div>
+
+                            <div class="detail-item">
+                                <span class="detail-label">Severity:</span>
+                                <span id="modal-severity">-</span>
+                            </div>
+
+                            <div class="detail-item">
+                                <span class="detail-label">Reported By:</span>
+                                <span id="modal-reporter">-</span>
+                            </div>
+
+                            <div class="description-container">
+                                <h4>Description</h4>
+                                <p id="modal-description">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+
+    <!-- Link to JS file -->
+    <script src="{{ url_for('static', filename='js/fixed_complaints.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7siNY75HjFx4O4BPev1zSRTg-0ZvG-zo"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pothole Detection System - Contractors</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/contractors.css') }}">
+  <!-- CSRF for Flask-WTF (optional; safe if undefined) -->
+  <meta name="csrf-token" content="{{ csrf_token() if csrf_token else '' }}">
+  <style>
+    /* minimal modal styles used by both popups */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.2s}
+    .overlay.active{opacity:1;pointer-events:auto}
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.2s}
+    .modal.active{opacity:1;pointer-events:auto}
+    .modal-content{background:#1f2937;color:#e5e7eb;border:1px solid #374151;border-radius:14px;max-width:720px;width:92%;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .modal-header{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid #374151}
+    .modal-body{padding:18px}
+    .close-modal{background:transparent;border:0;color:#9ca3af;font-size:28px;cursor:pointer}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+    .btn{padding:9px 14px;border-radius:8px;border:0;cursor:pointer}
+    .btn-primary{background:#10b981;color:#fff}
+    .btn-secondary{background:#374151;color:#e5e7eb}
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 20.9C13.4714 20.9 14.9 20.5 16.1213 19.7165C17.3427 18.9331 18.3072 17.7997 18.9021 16.4498C19.497 15.0999 19.6963 13.5951 19.4747 12.1343C19.2531 10.6735 18.6203 9.3158 17.6569 8.2437C16.6934 7.1716 15.4454 6.42311 14.0627 6.09066C12.68 5.7582 11.2307 5.86371 9.91209 6.39442C8.59352 6.92513 7.46849 7.85562 6.69071 9.05986C5.91293 10.2641 5.51604 11.6854 5.55 13.13C5.55 17.35 9.25 20.45 11.45 20.85C11.6301 20.8833 11.815 20.9 12 20.9Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="white"/>
+      </svg>
+      <span>Pothole Detection System</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('get_contractors') }}" class="active">Contractors</a></li>
+        <li><a href="/" id="logout-btn">Logout</a></li>
+      </ul>
+    </nav>
+    <div class="user-info"><span class="dollar-sign">$</span></div>
+  </header>
+
+  <main class="container">
+    <div class="dashboard-header">
+      <h1>Contractors Management</h1>
+      <p>View and manage contractors and applications</p>
+    </div>
+
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-icon success">👷</div>
+        <div class="stat-content">
+          <h2 id="active-count">{{ active_count }}</h2>
+          <p>Active Contractors</p>
+          <span class="stat-footer">Currently working</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon progress">🔄</div>
+        <div class="stat-content">
+          <h2 id="pending-count">{{ pending_count }}</h2>
+          <p>Pending Applications</p>
+          <span class="stat-footer">Awaiting approval</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon warning">📊</div>
+        <div class="stat-content">
+          <h2 id="jobs-count">{{ jobs_count }}</h2>
+          <p>Total Jobs Assigned</p>
+          <span class="stat-footer">All time</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon completed">✅</div>
+        <div class="stat-content">
+          <h2 id="completed-jobs-count">{{ completed_jobs_count }}</h2>
+          <p>Total Jobs Completed</p>
+          <span class="stat-footer">All time</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="active" onclick="switchTab('active')">Active Contractors</button>
+      <button class="tab-btn" data-tab="pending" onclick="switchTab('pending')">Pending Applications</button>
+    </div>
+
+    <!-- Active Contractors -->
+    <div id="active-contractors" class="tab-content active">
+      <div class="table-container">
+        <table class="contractors-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Company Name</th>
+              <th>Email</th>
+              <th>Assigned Jobs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for contractor in active_contractors %}
+            <tr>
+              <td>{{ contractor[0] }}</td>
+              <td>{{ contractor[3] }}</td>
+              <td>{{ contractor[2] }}</td>
+              <td>{{ contractor[7] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pending Contractors -->
+    <div id="pending-contractors" class="tab-content">
+      <div class="contractors-section">
+        <h2>Pending Applications</h2>
+        <p>Review and approve contractor applications</p>
+        <div class="table-container">
+          <table class="contractors-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Company Name</th>
+                <th>Email</th>
+                <th>Applied On</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for contractor in pending_contractors %}
+              <tr>
+                <td>{{ contractor[0] }}</td>
+                <td>{{ contractor[3] }}</td>
+                <td>{{ contractor[2] }}</td>
+                <td>
+                  {% if contractor[7] %}
+                    {{ contractor[7].strftime('%Y-%m-%d') }}
+                  {% else %}Not Available{% endif %}
+                </td>
+                <td class="actions">
+                  <button class="btn-approve" onclick="openApproveModal({{ contractor[0] }}, this)">Approve</button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Contractor Profile Modal (phone removed) -->
+  <div class="modal" id="contractor-profile-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="contractor-profile-title">Contractor Profile</h2>
+        <button class="close-modal" onclick="closeContractorProfileModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid">
+          <div class="modal-col">
+            <h3>Contractor Information</h3>
+            <div class="detail-item"><strong>Company:</strong> <span id="contractor-company"></span></div>
+            <div class="detail-item"><strong>Email:</strong> <span id="contractor-email"></span></div>
+            <div class="detail-item"><strong>Specialization:</strong> <span id="contractor-specialization"></span></div>
+          </div>
+          <div class="modal-col">
+            <h3>Performance</h3>
+            <div class="detail-item"><strong>Jobs Assigned:</strong> <span id="contractor-jobs-assigned"></span></div>
+            <div class="detail-item"><strong>Jobs Completed:</strong> <span id="contractor-jobs-completed"></span></div>
+            <button class="btn btn-secondary" id="remove-contractor-btn" style="margin-top:20px;">Remove Contractor</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Approve Confirmation Modal -->
+  <div class="modal" id="approve-modal">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="approve-title">
+      <div class="modal-header">
+        <h2 id="approve-title">Approve Contractor</h2>
+        <button class="close-modal" onclick="closeApproveModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="approve-text">Confirm approval?</p>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="closeApproveModal()">Cancel</button>
+          <button class="btn btn-primary" id="approve-confirm-btn">Approve</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <script src="{{ url_for('static', filename='js/contractors.js') }}"></script>
+</body>
+</html>

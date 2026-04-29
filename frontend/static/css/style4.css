@@ -1,0 +1,440 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  /* Login container with proper spacing */
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 80px;
+    flex: 1;
+    z-index: 10;
+    margin-bottom: 150px;
+  }
+  
+  .login-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+  }
+  
+  /* Avatar styling */
+  .avatar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -70px;
+    margin-bottom: 20px;
+  }
+  
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .admin-avatar:after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 40px;
+    background-color: #000;
+    border-radius: 50% 50% 0 0;
+  }
+  
+  /* Text styles */
+  h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .subtitle {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 14px;
+  }
+  
+  /* Input groups */
+  .input-group {
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  input:focus {
+    border-color: #4a90e2;
+  }
+  
+  .input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+  }
+  
+  /* File upload styling */
+  .file-group {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .file-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .file-input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .file-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;
+    font-size: 14px;
+    font-weight: normal;
+  }
+  
+  .file-name {
+    margin-left: 10px;
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .file-help {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  /* Button styling */
+  .signup-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #45a049;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .signup-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .login-link {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .login-link a {
+    color:#45a049;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /* Corner decorations */
+  .corner-decoration {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #a0c8f0;
+    z-index: 5;
+  }
+  
+  .top-left {
+    top: 20px;
+    left: 20px;
+    border-right: none;
+    border-bottom: none;
+  }
+  
+  .top-right {
+    top: 20px;
+    right: 20px;
+    border-left: none;
+    border-bottom: none;
+  }
+  
+  /* City skyline */
+  .city-skyline {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #a0a0a0;
+    z-index: 2;
+  }
+  
+  .city-skyline:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+        to right,
+        #a0a0a0 0%,
+        #a0a0a0 5%,
+        #b0b0b0 5%,
+        #b0b0b0 10%,
+        #909090 10%,
+        #909090 15%,
+        #a0a0a0 15%,
+        #a0a0a0 25%,
+        #b0b0b0 25%,
+        #b0b0b0 30%,
+        #909090 30%,
+        #909090 35%,
+        transparent 35%,
+        transparent 65%,
+        #909090 65%,
+        #909090 70%,
+        #a0a0a0 70%,
+        #a0a0a0 75%,
+        #b0b0b0 75%,
+        #b0b0b0 85%,
+        #909090 85%,
+        #909090 90%,
+        #a0a0a0 90%,
+        #a0a0a0 100%
+    );
+    background-size: 100% 100%;
+    clip-path: polygon(
+        0% 100%,
+        0% 40%,
+        5% 70%,
+        10% 45%,
+        15% 70%,
+        20% 40%,
+        25% 60%,
+        30% 35%,
+        35% 60%,
+        40% 45%,
+        45% 65%,
+        50% 30%,
+        55% 55%,
+        60% 40%,
+        65% 60%,
+        70% 35%,
+        75% 65%,
+        80% 40%,
+        85% 55%,
+        90% 30%,
+        95% 60%,
+        100% 45%,
+        100% 100%
+    );
+  }
+  
+  /* Road and cars */
+  .road-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 3;
+  }
+  
+  .road {
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    position: relative;
+  }
+  
+  .lane-markings {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: repeating-linear-gradient(
+        to right,
+        transparent,
+        transparent 20px,
+        white 20px,
+        white 40px
+    );
+  }
+  
+  .cars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .car {
+    position: absolute;
+    width: 40px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 5px;
+  }
+  
+  .red-car {
+    background-color: #ff5252;
+  }
+  
+  .blue-car {
+    background-color: #2196F3;
+  }
+  
+  .green-car {
+    background-color: #4CAF50;
+  }
+  
+  .yellow-car {
+    background-color: #FFC107;
+  }
+  
+  /* Car animations */
+  @keyframes driveRight {
+    from { left: -50px; }
+    to { left: calc(100% + 50px); }
+  }
+  
+  @keyframes driveLeft {
+    from { right: -50px; }
+    to { right: calc(100% + 50px); }
+  }
+  
+  /* Fixed positioning for small screens */
+  @media (max-height: 700px) {
+    .login-container {
+      padding-top: 40px;
+    }
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 600px) {
+    .login-box {
+      width: 90%;
+      padding: 20px;
+    }
+    
+    .corner-decoration {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .avatar-container {
+      margin-top: -50px;
+    }
+  }
+
+  /* Avatar styling fixes */
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -70px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 3px solid white;
+  }
+  
+  /* Admin avatar - black silhouette */
+  .admin-avatar:after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 40px;
+    background-color: #000;
+    border-radius: 50% 50% 0 0;
+  }
+  
+  /* User avatar - green silhouette */
+  .user-avatar:after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 40px;
+    background-color: #4CAF50;
+    border-radius: 50% 50% 0 0;
+  }
+  
+  /* Legacy logo styles for backward compatibility - can be removed if not needed */
+  .login-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: -70px auto 15px;
+    background-color: white;
+    display: none; /* Hidden by default in favor of avatar */
+  }
+  
+  .admin-logo {
+    background-color: #3b5998;
+  }
+  
+  .user-logo {
+    background-color: #4CAF50;
+  }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Map - Mumbai Centered</title>
+  <style>
+    /* Full screen map */
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Load Google Maps script async and defer without blocking -->
+<script>
+  // Mumbai coordinates
+  const mumbai = { lat: 19.0760, lng: 72.8777 };
+  let map; // Declare map globally
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: mumbai,
+      zoom: 12,
+    });
+
+    // Add marker
+    const marker = new google.maps.Marker({
+      position: mumbai,
+      map: map,
+      title: "Mumbai",
+    });
+  }
+</script>
+
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7siNY75HjFx4O4BPev1zSRTg-0ZvG-zo
+  &callback=initMap"
+  async defer
+></script>
+
+</body>
+</html>

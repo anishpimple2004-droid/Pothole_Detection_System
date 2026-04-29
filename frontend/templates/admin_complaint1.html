@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints - Pothole Detection System</title>
+    <link rel="stylesheet" href="../static/css/complaints_style8.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 20.9C13.4714 20.9 14.9 20.5 16.1213 19.7165C17.3427 18.9331 18.3072 17.7997 18.9021 16.4498C19.497 15.0999 19.6963 13.5951 19.4747 12.1343C19.2531 10.6735 18.6203 9.3158 17.6569 8.2437C16.6934 7.1716 15.4454 6.42311 14.0627 6.09066C12.68 5.7582 11.2307 5.86371 9.91209 6.39442C8.59352 6.92513 7.46849 7.85562 6.69071 9.05986C5.91293 10.2641 5.51604 11.6854 5.55 13.13C5.55 17.35 9.25 20.45 11.45 20.85C11.6301 20.8833 11.815 20.9 12 20.9Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="black"/>
+            </svg>
+            <span>Pothole Detection System</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/admin_dashboard">Dashboard</a></li>
+                <li class="active"><a href="/complaints">Complaints</a></li>
+                <li><a href="/contractors">Contractors</a></li>
+                <li><a href="#" id="logout-btn">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="complaints-header">
+            <h1>Pothole Complaints</h1>
+            <p>View and manage all reported potholes in the system</p>
+        </section>
+
+        <section class="map-section">
+            <h2>Pothole Locations</h2>
+            <p>Map view of all reported potholes</p>
+            <div class="map-container" id="map">
+                <div class="map-placeholder">
+                    <div class="map-dots">
+                        <div class="dot red" style="top: 40%; left: 15%;"></div>
+                        <div class="dot red" style="top: 65%; left: 35%;"></div>
+                        <div class="dot red" style="bottom: 25%; right: 30%;"></div>
+                        <div class="dot blue" style="top: 30%; right: 45%;"></div>
+                        <div class="dot blue" style="top: 45%; left: 55%;"></div>
+                        <div class="dot blue" style="bottom: 35%; left: 70%;"></div>
+                        <div class="dot green" style="top: 20%; left: 40%;"></div>
+                        <div class="dot green" style="top: 50%; right: 20%;"></div>
+                        <div class="dot green" style="bottom: 15%; left: 25%;"></div>
+                    </div>
+                    <div class="map-center">
+                        <p>Google Maps would load here with pothole locations</p>
+                        <p class="map-subtext">Map shows all reported potholes in the system</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="complaints-tabs">
+            <div class="tabs">
+                <button class="tab active" data-tab="manage">Manage Complaints</button>
+                <button class="tab" data-tab="fixed">Fixed Complaints</button>
+            </div>
+        
+            <div class="tab-content" id="manage-complaints">
+                <div class="complaints-grid">
+                    <!-- Active complaints will be loaded here -->
+                    <div class="complaint-card">
+                        <div class="complaint-image">
+                            <img src="../static/images/pothole1.jpg" alt="Pothole">
+                            <div class="severity-tag high">High</div>
+                        </div>
+                        <div class="complaint-info">
+                            <h3>Complaint ID: C001</h3>
+                            <div class="location">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="#6B7280"/>
+                                    <path d="M12 22C8 18 6 14 6 11C6 7.68629 8.68629 5 12 5C15.3137 5 18 7.68629 18 11C18 14 16 18 12 22Z" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Main Street, near City Hall</span>
+                            </div>
+                            <div class="date-info">
+                                <span>Reported: 2025-04-15</span>
+                            </div>
+                            <div class="status-tag pending">Pending</div>
+                            <div class="description">Deep pothole causing traffic issues</div>
+                            <div class="assigned-to">
+                                <span class="label">Assigned to:</span>
+                                <span class="value">Not assigned</span>
+                            </div>
+                            <button class="btn btn-primary view-complaint" data-id="C001">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="complaint-card">
+                        <div class="complaint-image">
+                            <img src="../static/images/pothole2.jpg" alt="Pothole">
+                            <div class="severity-tag medium">Medium</div>
+                        </div>
+                        <div class="complaint-info">
+                            <h3>Complaint ID: C002</h3>
+                            <div class="location">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="#6B7280"/>
+                                    <path d="M12 22C8 18 6 14 6 11C6 7.68629 8.68629 5 12 5C15.3137 5 18 7.68629 18 11C18 14 16 18 12 22Z" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Park Avenue, near Central Park</span>
+                            </div>
+                            <div class="date-info">
+                                <span>Reported: 2025-04-17</span>
+                            </div>
+                            <div class="status-tag progress">In Progress</div>
+                            <div class="description">Moderate pothole affecting traffic flow</div>
+                            <div class="assigned-to">
+                                <span class="label">Assigned to:</span>
+                                <span class="value">John Smith</span>
+                            </div>
+                            <button class="btn btn-primary view-complaint" data-id="C002">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="complaint-card">
+                        <div class="complaint-image">
+                            <img src="../static/images/pothole3.jpg" alt="Pothole">
+                            <div class="severity-tag low">Low</div>
+                        </div>
+                        <div class="complaint-info">
+                            <h3>Complaint ID: C003</h3>
+                            <div class="location">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="#6B7280"/>
+                                    <path d="M12 22C8 18 6 14 6 11C6 7.68629 8.68629 5 12 5C15.3137 5 18 7.68629 18 11C18 14 16 18 12 22Z" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Broadway, near Times Square</span>
+                            </div>
+                            <div class="date-info">
+                                <span>Reported: 2025-04-18</span>
+                            </div>
+                            <div class="status-tag pending">Pending</div>
+                            <div class="description">Small pothole, non-urgent repair needed</div>
+                            <div class="assigned-to">
+                                <span class="label">Assigned to:</span>
+                                <span class="value">Not assigned</span>
+                            </div>
+                            <button class="btn btn-primary view-complaint" data-id="C003">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="tab-content hidden" id="fixed-complaints">
+                <div class="complaints-grid">
+                    <!-- Fixed complaints will be loaded here -->
+                    <div class="complaint-card">
+                        <div class="complaint-image">
+                            <img src="../static/images/fixed1.jpg" alt="Fixed Pothole">
+                            <div class="fixed-tag">Fixed</div>
+                        </div>
+                        <div class="complaint-info">
+                            <h3>Complaint ID: C004</h3>
+                            <div class="location">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="#6B7280"/>
+                                    <path d="M12 22C8 18 6 14 6 11C6 7.68629 8.68629 5 12 5C15.3137 5 18 7.68629 18 11C18 14 16 18 12 22Z" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>5th Avenue, near Public Library</span>
+                            </div>
+                            <div class="date-info">
+                                <span>Reported: 2025-04-10</span>
+                                <span class="fixed-date">Fixed: 2025-04-15</span>
+                            </div>
+                            <div class="status-tag completed">Completed</div>
+                            <div class="description">Large pothole repaired successfully</div>
+                            <div class="assigned-to">
+                                <span class="label">Fixed by:</span>
+                                <span class="value">Lisa Johnson</span>
+                            </div>
+                            <button class="btn btn-primary view-complaint" data-id="C004">View Details</button>
+                        </div>
+                    </div>
+
+                    <div class="complaint-card">
+                        <div class="complaint-image">
+                            <img src="../static/images/fixed2.jpg" alt="Fixed Pothole">
+                            <div class="fixed-tag">Fixed</div>
+                        </div>
+                        <div class="complaint-info">
+                            <h3>Complaint ID: C005</h3>
+                            <div class="location">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="#6B7280"/>
+                                    <path d="M12 22C8 18 6 14 6 11C6 7.68629 8.68629 5 12 5C15.3137 5 18 7.68629 18 11C18 14 16 18 12 22Z" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Lexington Avenue, near Station</span>
+                            </div>
+                            <div class="date-info">
+                                <span>Reported: 2025-04-05</span>
+                                <span class="fixed-date">Fixed: 2025-04-12</span>
+                            </div>
+                            <div class="status-tag completed">Completed</div>
+                            <div class="description">Medium pothole fixed with asphalt</div>
+                            <div class="assigned-to">
+                                <span class="label">Fixed by:</span>
+                                <span class="value">Mike Roberts</span>
+                            </div>
+                            <button class="btn btn-primary view-complaint" data-id="C005">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Complaint Modal -->
+    <div class="modal" id="complaint-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Complaint Details - C001</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-grid">
+                    <div class="modal-col">
+                        <div class="complaint-image-large">
+                            <img id="modal-image" src="../static/images/placeholder.jpg" alt="Pothole image">
+                        </div>
+                        <div class="modal-map-container">
+                            <h3>Location Map</h3>
+                            <div class="modal-map-placeholder">
+                                <p>Map location would appear here</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-col">
+                        <div class="complaint-details">
+                            <h3>Complaint Information</h3>
+                            <p class="subtext">Details about the reported pothole</p>
+                            
+                            <div id="modal-status" class="modal-status pending">Pending</div>
+                            
+                            <div class="detail-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 2V5M16 2V5M3.5 9.09H20.5M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z" stroke="#6B7280" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="detail-label">Date Reported:</span>
+                                <span id="modal-date-reported">2025-03-15</span>
+                            </div>
+                            
+                            <div class="detail-item" id="fixed-date-container" style="display:none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9.75 12L11 13.25L14.25 10" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="detail-label">Date Fixed:</span>
+                                <span id="modal-date-fixed">2025-03-18</span>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13Z" fill="#6B7280"/>
+                                    <path d="M12 22C8 18 6 14 6 11C6 7.68629 8.68629 5 12 5C15.3137 5 18 7.68629 18 11C18 14 16 18 12 22Z" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="detail-label">Location:</span>
+                                <span id="modal-location">Main Street, near City Hall</span>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 9V14M12 21.41H5.94C2.47 21.41 1.02 18.93 2.7 15.9L5.82 10.28L8.76 5.00003C10.54 1.79003 13.46 1.79003 15.24 5.00003L18.18 10.29L21.3 15.91C22.98 18.94 21.52 21.42 18.06 21.42H12V21.41Z" stroke="#F43F5E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="detail-label">Severity:</span>
+                                <span id="modal-severity" class="severity-text high">High</span>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="detail-label">Reported By:</span>
+                                <span id="modal-reporter">user@example.com</span>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="detail-label">Assigned To:</span>
+                                <span id="modal-assigned">Not assigned</span>
+                            </div>
+                            
+                            <div class="description-container">
+                                <h4>Description</h4>
+                                <p id="modal-description">Deep pothole causing traffic congestion</p>
+                            </div>
+                            
+                            <div class="modal-actions" id="modal-actions">
+                                <button class="btn btn-primary" id="assign-contractor-btn">Assign Contractor</button>
+                                <button class="btn btn-secondary" id="cancel-complaint-btn">Cancel Complaint</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assign Contractor Modal -->
+    <div class="modal" id="assign-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Assign Contractor</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="assign-form">
+                    <input type="hidden" id="complaint-id-input" name="complaint_id">
+                    <div class="form-group">
+                        <label for="contractor-select">Select Contractor</label>
+                        <select id="contractor-select" name="contractor_id" required>
+                            <option value="">-- Select a contractor --</option>
+                            <option value="1">John Smith</option>
+                            <option value="2">Lisa Johnson</option>
+                            <option value="3">Mike Roberts</option>
+                            <option value="4">Sarah Williams</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="assign-notes">Notes (optional)</label>
+                        <textarea id="assign-notes" name="notes" rows="3" placeholder="Enter any notes for the contractor..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Assign</button>
+                        <button type="button" class="btn btn-secondary cancel-assign">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+    
+    <script src="../static/js/complaints_page.js"></script>
+</body>
+</html>

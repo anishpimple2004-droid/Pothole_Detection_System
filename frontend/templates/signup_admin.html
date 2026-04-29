@@ -1,0 +1,74 @@
+<!-- signup_admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Signup</title>
+  <link rel="stylesheet" href="/static/css/style4.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+</head>
+<body>
+  <!-- Corner decorations -->
+  <div class="corner-decoration top-left"></div>
+  <div class="corner-decoration top-right"></div>
+  
+  <div class="login-container">
+    <div class="login-box">
+      <div class="avatar-container">
+        <div class="avatar admin-avatar"></div>
+      </div>
+      <h2>ADMIN SIGNUP</h2>
+      <p class="subtitle">Create a new admin account</p>
+      
+      <form method="POST" action="/signup/admin" enctype="multipart/form-data">
+        <div class="input-group">
+          <input type="text" name="name" placeholder="Full Name" required />
+          <span class="input-icon"><i class="fas fa-user"></i></span>
+        </div>
+        
+        <div class="input-group">
+          <input type="email" name="email" placeholder="Email" required />
+          <span class="input-icon"><i class="fas fa-envelope"></i></span>
+        </div>
+        
+        <div class="input-group">
+          <input type="password" name="password" placeholder="Password" required />
+          <span class="input-icon"><i class="fas fa-lock"></i></span>
+        </div>
+        
+        <div class="input-group">
+          <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+          <span class="input-icon"><i class="fas fa-shield-alt"></i></span>
+        </div>
+        
+        <div class="input-group file-group">
+          <label>Government ID Proof (Required)</label>
+          <div class="file-input-container">
+            <button type="button" class="file-button" id="file-button">Choose File</button>
+            <span id="file-name" class="file-name">No file chosen</span>
+            <input type="file" name="gov_id" id="gov-id" required hidden />
+          </div>
+          <p class="file-help">Please upload a valid government ID to verify you are a government employee</p>
+        </div>
+        
+        <button type="submit" class="signup-btn">SIGN UP</button>
+      </form>
+      <p class="login-link">Already have an account? <a href="/login/admin">Login</a></p>
+    </div>
+  </div>
+  
+  <!-- City skyline -->
+  <div class="city-skyline"></div>
+  
+  <!-- Road and cars -->
+  <div class="road-container">
+    <div class="road">
+      <div class="lane-markings"></div>
+      <div id="cars-container" class="cars"></div>
+    </div>
+  </div>
+  
+  <script src="/static/js/signup.js"></script>
+</body>
+</html>
