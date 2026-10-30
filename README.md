@@ -72,7 +72,7 @@ pothole_system/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/sampurnaprabhu3/Pothole_Detection_System.git
+   git clone https://github.com/anishpimple2004-droid/Pothole_Detection_System.git
    cd Pothole_Detection_System
    ```
 
