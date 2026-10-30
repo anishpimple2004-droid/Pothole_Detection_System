@@ -51,6 +51,10 @@ Thumbs.db
 *.npy
 *.npz
 
+# ---- Uploads / Data ----
+uploads/
+backend/uploads/
+
 # ---- Media files ----
 *.mp4
 *.avi
